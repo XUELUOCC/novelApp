@@ -1,0 +1,65 @@
+{
+  "id": "2549900",
+  "name": "novel",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "小说图标",
+  "glyphs": [
+    {
+      "icon_id": "21621363",
+      "name": "书",
+      "font_class": "shu-copy",
+      "unicode": "e8e7",
+      "unicode_decimal": 59623
+    },
+    {
+      "icon_id": "21621364",
+      "name": "排行",
+      "font_class": "paihang-copy",
+      "unicode": "e8e8",
+      "unicode_decimal": 59624
+    },
+    {
+      "icon_id": "21621365",
+      "name": "分类",
+      "font_class": "fenlei-copy",
+      "unicode": "e8e9",
+      "unicode_decimal": 59625
+    },
+    {
+      "icon_id": "21621366",
+      "name": "书架",
+      "font_class": "shujia-copy",
+      "unicode": "e8ea",
+      "unicode_decimal": 59626
+    },
+    {
+      "icon_id": "356474",
+      "name": "书",
+      "font_class": "shu",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "2542740",
+      "name": "排行",
+      "font_class": "paihang",
+      "unicode": "e8e6",
+      "unicode_decimal": 59622
+    },
+    {
+      "icon_id": "4640927",
+      "name": "分类",
+      "font_class": "fenlei",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "5491715",
+      "name": "书架",
+      "font_class": "shujia",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    }
+  ]
+}
