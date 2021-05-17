@@ -1,7 +1,6 @@
 <template>
   <div>
     <p>书城</p>
-    <!-- <tabbar></tabbar> -->
   </div>
 </template>
 
@@ -16,6 +15,9 @@ export default {
       return{
 
       }
+  },
+  mounted(){
+
   },
   methods:{
       

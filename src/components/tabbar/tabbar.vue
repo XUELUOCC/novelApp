@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-tabbar v-model="active" @change="onChange">
+    <van-tabbar placeholder v-model="active" @change="onChange" >
          <van-tabbar-item v-for="item in tabbarList" :key="item.index" :to="item.url" >
             <template #icon="props">
                 <img :src="props.active ? item.active : item.inactive" />
@@ -46,7 +46,7 @@ export default {
             ]
         }
     },
-    mounted(){ 
+    created(){ 
         console.log(this.$route)
         let path=this.$route.fullPath;
         let newData=this.tabbarList.filter((item,index)=>{

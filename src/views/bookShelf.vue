@@ -7,10 +7,21 @@
         </div>
         <div class="right">
           <div class="rightOne">
-            <router-link to="">阅读记录</router-link>
+            <router-link to="/readingLog">阅读记录</router-link>
           </div>
           <div class="rightTwo">
-            <select-feids :text="text"></select-feids>
+            <!-- <select-feids :text="text"></select-feids> -->
+            <van-popover
+              v-model="showPopover"
+              trigger="click"
+              placement="bottom-end"
+              :actions="actions"
+              @select="onSelect"
+            >
+              <template #reference>
+               <span>编辑书架</span>
+              </template>
+            </van-popover>
           </div>
         </div>
       </div>
@@ -56,7 +67,7 @@
       </div>
       <div class="cellAdd" >
         <div class="cellAddLeft">
-          <div class="addNovel">
+          <div class="addNovel" @click="getNovel">
             <span >
               <van-icon name="plus" color="#ededed" />
             </span>
@@ -70,7 +81,45 @@
     </div>
 
     <!--弹出层-->
-    <van-popup v-model="show" position="left" :style="{ height: '100%' }" />
+    <van-popup v-model="show" position="left" style="width:60%;height:100%;" >
+      <div class="setting">
+        <div class="settingAvatar">
+          <div class="settingAvatarContent">
+            <div class="settingLeft">
+              <div class="head">
+              </div>
+            </div>
+            <div class="settingRight">
+              <div class="settingRightContent">
+                <div class="settingId">ID:1224593</div>
+                <van-tag round type="danger" >绑定账号</van-tag>
+              </div> 
+            </div>
+          </div> 
+        </div>
+
+        <div class="tips"></div>
+        <div class="settingList">
+          <div class="settingListContent">
+            <van-cell 
+            size="large" 
+            v-for="item in settingList" 
+            :key="item.index" 
+            :title="item.name" 
+            is-link 
+            :to="item.url"
+            > 
+              <template #title>
+                <img :src="item.src" alt="" style="width:20px;height:20px;margin-right:10px;">
+                <span class="custom-title">{{item.name}}</span>
+              </template>
+            </van-cell>
+          </div>
+          
+        </div>
+
+      </div>
+    </van-popup>
 
     
   </div>
@@ -86,9 +135,12 @@ export default {
   data(){
     return{
       text:'编辑书架',
+      showPopover:false, //vant的气泡选择框是否展示
+      actions: [{ text: '封面模式' }, { text: '编辑书架' }],
       searchText:"",
       loading: false,
       finished: false,
+      show:false,
       list: [
         {
           imgUrl:require('../assets/bookShelf/novelPage.jpg'),
@@ -119,6 +171,32 @@ export default {
           time:'1周前'
         },
       ],
+      settingList:[
+        {
+          name:'阅读记录',
+          url:'/readingLog',
+          src:require('../assets/bookShelf/read.png'),
+          value:''
+        },
+        {
+          name:'音频记录',
+          url:'',
+          src:require('../assets/bookShelf/read.png'),
+          value:''
+        },
+        {
+          name:'缓存管理',
+          url:'',
+          src:require('../assets/bookShelf/cache.png'),
+          value:''
+        },
+        {
+          name:'设置',
+          url:'',
+          src:require('../assets/bookShelf/setting.png'),
+          value:''
+        },
+      ]
     }
   },
   methods:{
@@ -127,6 +205,20 @@ export default {
       console.log('aaaa')
       this.loading=false;
       this.finished = true;
+    },
+    //点击头像出现设置
+    getSetting(){
+      this.show=true;
+    },
+    //点击编辑书架气泡选择框
+    onSelect(action) {
+      console.log(action.text);
+      if(action.text="编辑书架"){
+        // this.$route.push()
+      }
+    },
+    getNovel(){
+      this.$router.push('/bookMall')
     }
   }
 };
@@ -349,4 +441,94 @@ export default {
 .cellAddRight p{
   color:#797979;
 }
+
+/**点击头像出现设置 */
+.setting{
+  width:100%;
+  height:100%;
+  overflow: hidden;
+}
+.settingAvatar{
+  width:100%;
+  height:15%;
+  /* margin-top:20px; */
+  background-color:#fff;
+}
+.settingAvatarContent{
+  width:90%;
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.settingLeft{
+  width:20%;
+  height:80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.head{
+  width:35px;
+  height:35px;
+  border-radius: 50%;
+  background-image:url('../assets/bookShelf/avatar.png') ;
+  background-size:100% 100%;
+  background-repeat: no-repeat;
+}
+.van-tag{
+  padding:0 8px;
+}
+.head span{
+  font-size:26px;
+}
+.settingRight{
+  width:80%;
+  height:80%;
+  margin-left:10px;
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+}
+.settingRightContent{
+  width:auto;
+  height:35px;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
+  align-items: flex-start;
+}
+
+/**设置列表 */
+.settingList{
+  width:100%;
+  height:80%;
+  background-color:#fff;
+  overflow: hidden;
+}
+.settingListBottom{
+  width:100%;
+  height:40%;
+  background-color:#fff;
+  border:1px solid red;
+  overflow: hidden;
+}
+.settingListContent{
+  width:90%;
+  height:100%;
+  margin:0 auto;
+}
+.van-cell__title{
+  display:flex;
+  align-items: center;
+}
+
+/**设置中的间隙div */
+.tips{
+  width:100%;
+  height:2%;
+  background-color:rgb(240,240,250);
+}
+
 </style>
