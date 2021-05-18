@@ -169,7 +169,7 @@ div /deep/.van-field__control:-moz-placeholder {
     color: #fff;
 }/* Mozilla Firefox 19+ */
 
-.van-field__right-icon{
+div /deep/.van-field__right-icon{
   color:#fff;
 }
 
