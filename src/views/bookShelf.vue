@@ -52,20 +52,22 @@
         finished-text="没有更多了"
         @load="onLoad"
       >
-      <div class="cell" v-for="(item,index) in list" :key="item.index" @click="getNovelContent(index)">
-        <div class="cellLeft">
-          <img :src="item.imgUrl" alt="">
-        </div>
-        <div class="cellCenter">
-          <div class="name">{{item.name}}</div>
-          <div class="noticeText">{{item.noticeText}}</div>
-          <div class="tipsUpdate">{{item.tipsUpdate}}</div>
-        </div>
-        <div class="cellRight">
-          <p>{{item.time}}</p>
+      <div v-if="!showTable">
+        <div class="cell" v-for="(item,index) in list" :key="item.index" @click="getNovelContent(index)">
+          <div class="cellLeft">
+            <img :src="item.imgUrl" alt="">
+          </div>
+          <div class="cellCenter">
+            <div class="name">{{item.name}}</div>
+            <div class="noticeText">{{item.noticeText}}</div>
+            <div class="tipsUpdate">{{item.tipsUpdate}}</div>
+          </div>
+          <div class="cellRight">
+            <p>{{item.time}}</p>
+          </div>
         </div>
       </div>
-      <div class="cellAdd" >
+      <div class="cellAdd" v-if="!showTable">
         <div class="cellAddLeft">
           <div class="addNovel" @click="getNovel">
             <span >
@@ -77,6 +79,26 @@
           <p>添加你喜欢的小说</p>
         </div>
       </div>
+      
+      <!--书架模式-->
+      <div class="listTable" v-if="showTable">
+        <van-grid :border="false" :column-num="3" :gutter="10">
+          <van-grid-item v-for="(item,index) in list" :key="item.index"  @click="getNovelContent(index)">
+            <van-image :src="item.imgUrl" />
+            <span class="tableNovelName">{{item.name}}</span>
+          </van-grid-item>
+          <van-grid-item >
+            <div class="tableAddNovel" @click="getNovel">
+              <span class="spanAdd">
+                <van-icon name="plus" color="#ededed" />
+              </span>
+            </div>
+            <span class="spanPass"></span>
+          </van-grid-item>
+        </van-grid>
+      </div>
+
+      
       </van-list>
     </div>
 
@@ -136,6 +158,7 @@ export default {
     return{
       text:'编辑书架',
       showPopover:false, //vant的气泡选择框是否展示
+      showTable:false,//小说列表的格式选择显示
       actions: [{ text: '封面模式' }, { text: '编辑书架' }],
       searchText:"",
       loading: false,
@@ -202,7 +225,7 @@ export default {
   methods:{
     //列表的数据加载
     onLoad(){
-      console.log('aaaa')
+      // console.log('aaaa')
       this.loading=false;
       this.finished = true;
     },
@@ -212,13 +235,19 @@ export default {
     },
     //点击编辑书架气泡选择框
     onSelect(action) {
-      console.log(action.text);
-      if(action.text="编辑书架"){
-        // this.$route.push()
+      // console.log(action.text);
+      if(action.text=="编辑书架"){
+        this.$router.push('/editBookShelf')
+      }else if(action.text=="封面模式"){
+        this.showTable=!this.showTable;
       }
     },
     getNovel(){
       this.$router.push('/bookMall')
+    },
+    //进入小说详情页面
+    getNovelContent(index){
+
     }
   }
 };
@@ -236,6 +265,7 @@ export default {
   background-color:rgb(240,240,250);
   position:fixed;
   top:0;
+  z-index:999;
 }
 .top{
   width:100%;
@@ -353,23 +383,24 @@ export default {
   margin-top:150px;
 }
 .cell{
-  width:100%;
-  height:120px;
+  width:90%;
+  /* height:120px; */
+  padding:10px 22px;
   display:flex;
   justify-content: space-between;
   align-items: center;
   border-bottom:1px solid #ededed
 }
 .cellLeft{
-  width:25%;
+  width:30%;
   height:100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .cellLeft img{
-  width:80%;
-  height:80%;
+  width:90%;
+  /* height:80%; */
 }
 .cellCenter{
   width:50%;
@@ -392,7 +423,7 @@ export default {
   color:#ffd5a8
 }
 .cellRight{
-  width:25%;
+  width:20%;
   height:80%;
   padding-top:15px;
 }
@@ -401,6 +432,31 @@ export default {
   margin:0 auto;
   text-align: right;
   color:#737373;
+}
+
+/**小说的列表格式2 */
+.listTable{
+  width:95%;
+  margin:0 auto;
+}
+.tableNovelName{
+  margin-top:10px;
+}
+.tableAddNovel{
+  width:100%;
+  height:80%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow:0px 3px  3px 3px #e4e4e4;
+}
+.spanAdd{
+  color:#adadad;
+  font-size:24px;
+}
+.spanPass{
+    width:100%;
+    height:24px;
 }
 
 /**添加小说 */
@@ -417,15 +473,17 @@ export default {
   font-size:24px;
 }
 .cellAdd{
-  width:100%;
-  height:120px;
+  width:95%;
+  height:150px;
+  padding:10px 18px;
+  margin:0 auto;
   display:flex;
   justify-content: flex-start;
   align-items: center;
   border-bottom:1px solid #ededed
 }
 .cellAddLeft{
-  width:25%;
+  width:31%;
   height:100%;
   display: flex;
   justify-content: center;

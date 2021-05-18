@@ -47,6 +47,12 @@ const routes = [,
       import(/* webpackChunkName: "readingLog" */"../views/pages/readingLog.vue")
   },
   {
+    path:"/editBookShelf",
+    name:"editBookShelf",
+    component:()=>
+      import(/* webpackChunkName: "editBookShelf" */"../views/pages/editBookShelf.vue")
+  },
+  {
     path:"/login",
     name:"login",
     component:()=>

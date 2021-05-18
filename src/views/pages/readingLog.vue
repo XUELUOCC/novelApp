@@ -49,13 +49,18 @@
     <!--阅读历史为空的展示-->
     <div class="listNull" v-if="flag">
         <div class="listNullContent">
-            <div class="paper">
+            <!-- <div class="paper">
                 <img src="../../assets/readingLog/paper.png" alt="">
             </div>
             <div class="text">您还没有阅读记录</div>
             <div class="bottom">
                 <van-button size="large" round plain type="danger" to="/bookMall">去看书></van-button>
+            </div> -->
+            <van-empty description="您还没有阅读记录" :image="imgSrc">
+              <div class="bottom">
+                <van-button size="large" round plain type="danger" to="/bookMall">去看书></van-button>
             </div>
+            </van-empty>
         </div>
     </div>
   </div>
@@ -68,6 +73,7 @@ export default {
             loading: false,
             finished: false,
             flag:false,//判断list为空时是否显示相应的页面和样式
+            imgSrc:require("../../assets/readingLog/paper.png"),
             list: [
                 {
                 imgUrl:require('../../assets/bookShelf/novelPage.jpg'),
@@ -262,19 +268,12 @@ div /deep/.van-nav-bar .van-icon{
     justify-content: space-between;
     align-items: center;
 }
-.paper{
-    width:50%;
-    height:50%;
-}
-.paper img{
-    width:100%;
-}
-.text{
-    color:#adadad;
-    margin:0px auto 15px;
-}
+
 .bottom{
-    width:60%;
+    width:160px;
+}
+div /deep/ .van-empty__bottom{
+  margin-top:0.4rem;
 }
 
 </style>
