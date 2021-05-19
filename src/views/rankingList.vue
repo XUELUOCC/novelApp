@@ -133,21 +133,21 @@ export default {
   align-items:flex-end;
 }
 .img1{
-  width:27%;
+  width:28%;
   height:100%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
 .img2{
-  width:30%;
+  width:35%;
   height:100%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
 .img3{
-  width:27%;
+  width:28%;
   height:100%;
   display: flex;
   justify-content: center;
