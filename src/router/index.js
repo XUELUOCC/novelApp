@@ -53,6 +53,12 @@ const routes = [,
       import(/* webpackChunkName: "editBookShelf" */"../views/pages/editBookShelf.vue")
   },
   {
+    path:"/bookList",
+    name:"bookList",
+    component:()=>
+      import(/* webpackChunkName: "bookList" */"../views/pages/bookList.vue")
+  },
+  {
     path:"/login",
     name:"login",
     component:()=>
