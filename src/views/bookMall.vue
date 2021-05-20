@@ -13,7 +13,14 @@
     </div>
 
     <div class="tabContent">
-      <van-tabs  v-model="active" sticky offset-top="80px" background="#4d484e" title-active-color="red" title-inactive-color="red">
+      <van-tabs  
+      v-model="active" 
+      sticky offset-top="80px" 
+      background="#4d484e" 
+      title-active-color="red" 
+      title-inactive-color="red"
+      @click="clickTabs"
+      >
         <van-tab title="精选">
           <concentration></concentration>
         </van-tab>
@@ -48,132 +55,14 @@ export default {
   data(){
       return{
         searchValue:'',
-        active:0,
-        loading: false,
-        finished: false,
-        loadingX: false,
-        finishedX: false,
-        guruList:[
-          {
-            name:'圣墟',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },    
-        ],
-        networkList:[
-           {
-            name:'圣墟',
-            rank:'TOP1',
-            class:'item1',
-            author:'醉不乖',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            rank:'TOP2',
-            class:'item2',
-            author:'醉不乖',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            rank:'TOP3',
-            class:'item3',
-            author:'醉不乖',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },  
-           {
-            name:'圣墟',
-            rank:'TOP4',
-            class:'item4',
-            author:'醉不乖',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },   
-        ],
-        cityBookList:[
-          {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },    
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },    
-        ],
-        XuanHuanList:[
-          {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },    
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },
-           {
-            name:'圣墟',
-            author:'辰东',
-            introduct:'圣墟的简介',
-            src:require('../assets/bookShelf/novelPage.jpg')
-          },   
-        ]
+        active:0,    
+        saveActive:0,
       }
+  },
+  watch:{
+    active:function(newValue,oldValue){
+      this.saveActive=newValue
+    }
   },
   mounted(){
 
@@ -182,24 +71,8 @@ export default {
       search(){
         console.log('search')
       },
-      //点击小说
-      getBookDetail(index){
-
-      },
-      onLoad(){
-        if(this.cityBookList.length==6){
-          this.loading=false;
-          this.finished=true;
-        }
-      },
-      onLoadX(){
-        if(this.XuanHuanList.length==6){
-          this.loadingX=false;
-          this.finishedX=true;
-        }
-      },
-      getCityBook(index){
-
+      clickTabs(name,title){
+        
       }
   }
 }

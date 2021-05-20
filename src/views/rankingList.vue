@@ -89,7 +89,7 @@ export default {
   },
   methods:{
     onLoad(){
-        if(this.classifyList.length==9){
+        if(this.classifyList.length==6){
         this.loading=false;
         this.finished=true;
         }

@@ -13,7 +13,7 @@
             :finished="finished"
             finished-text="没有更多了"
             @load="onLoad">
-                <div class="bookInfo" v-for="(item,index) in bookList" :key="item.index" @click="getCityBook(index)">
+                <div class="bookInfo" v-for="(item,index) in bookList" :key="item.index" @click="getBookDetail(index)">
                   <div class="infoLeft">
                     <img src="../../assets/bookShelf/novelPage.jpg" alt="">
                   </div>
@@ -106,6 +106,9 @@ export default {
             this.finished=true;
             }
         },
+        getBookDetail(index){
+          this.$router.push({name:'bookDetail',params:{id:'123'}})
+        }
     }
 }
 </script>

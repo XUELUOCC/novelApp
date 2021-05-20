@@ -59,6 +59,12 @@ const routes = [,
       import(/* webpackChunkName: "bookList" */"../views/pages/bookList.vue")
   },
   {
+    path:"/bookDetail",
+    name:"bookDetail",
+    component:()=>
+      import(/* webpackChunkName: "bookDetail" */"../views/pages/bookDetail.vue")
+  },
+  {
     path:"/login",
     name:"login",
     component:()=>
