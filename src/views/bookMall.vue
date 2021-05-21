@@ -57,22 +57,22 @@ export default {
         searchValue:'',
         active:0,    
         saveActive:0,
+        inject: ['reload'],  // 注入重载的功能（注入依赖）
       }
   },
   watch:{
-    active:function(newValue,oldValue){
-      this.saveActive=newValue
-    }
+
   },
   mounted(){
-
+    // console.log('mounted')
+    this.active=this.$store.state.active
   },
   methods:{
       search(){
         console.log('search')
       },
       clickTabs(name,title){
-        
+        this.$store.commit('saveActive',this.active)
       }
   }
 }

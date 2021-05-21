@@ -9,32 +9,42 @@
             @click-left="onClickLeft"
             />
         </div>
-        <div class="loginForm">
+        <div class="registerForm">
             <van-form @submit="onSubmit">
                 <div class='username'>
                     <img src="../assets/login/username.png" alt="">
                     <van-field
-                    v-model="loginForm.username"
+                    v-model="registerForm.username"
                     name="用户名"
                     label=""
-                    placeholder="用户名"
+                    placeholder="请输入用户名"
                     :rules="[{ required: true, message: '请填写用户名' }]"
                     />
                 </div>
                 <div class="password">
                     <img src="../assets/login/password.png" alt="">
                     <van-field
-                    v-model="loginForm.password"
+                    v-model="registerForm.password"
                     type="password"
                     name="密码"
                     label=""
-                    placeholder="密码"
+                    placeholder="请输入密码"
                     :rules="[{ validator, message: '请输入正确密码' }]"
                     />
                 </div>
-                <div class="loginBottom">
-                    <van-button round block type="danger" native-type="submit">登录</van-button>
-                    <span class="register" @click="getRegister">注册账号</span>
+                 <div class="password">
+                    <img src="../assets/login/password.png" alt="">
+                    <van-field
+                    v-model="registerForm.password"
+                    type="password"
+                    name="密码"
+                    label=""
+                    placeholder="请再次输入密码"
+                    :rules="[{ validator, message: '请输入正确密码' }]"
+                    />
+                </div>
+                <div class="registerBottom">
+                    <van-button round block type="danger" native-type="submit">注册</van-button>
                 </div>
             </van-form>
         </div>
@@ -46,7 +56,7 @@ export default {
     name:'login',
     data(){
         return{
-             loginForm:{
+             registerForm:{
                 username:'',
                 password:''
             }
@@ -64,9 +74,6 @@ export default {
         onSubmit(values) {
             console.log('submit', values);
         },
-        getRegister(){
-            this.$router.push('/register')
-        }
     }
 }
 </script>
@@ -82,11 +89,11 @@ export default {
 .top /deep/ .van-nav-bar{
     background-color:#fafafa;
 }
-.loginForm{
+.registerForm{
     width:80%;
-    height:40%;
+    height:50%;
 }
-.loginForm /deep/ .van-form{
+.registerForm /deep/ .van-form{
     width:100%;
     height:100%;
     display: flex;
@@ -102,7 +109,7 @@ export default {
     align-items:center;
 }
 .username img{
-    height:60%;
+    height:50%;
 }
 .password{
     width:100%;
@@ -112,13 +119,13 @@ export default {
     align-items:center;
 }
 .password img{
-    height:60%;
+    height:50%;
 }
-.loginForm /deep/ .van-cell{
+.registerForm /deep/ .van-cell{
     background-color:transparent;
     border-bottom:1px solid #e8e8e8;
 }
-.loginBottom{
+.registerBottom{
     width:80%;
     height:40%;
     display: flex;
@@ -126,7 +133,7 @@ export default {
     justify-content: space-between;
     align-items: center;
 }
-.loginBottom .register{
+.registerBottom .register{
     margin:10px 0;
     font-size:14px;
     color:red;

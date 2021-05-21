@@ -114,7 +114,7 @@
             <div class="settingRight">
               <div class="settingRightContent">
                 <div class="settingId">ID:1224593</div>
-                <van-tag round type="danger" >绑定账号</van-tag>
+                <van-tag round type="danger" @click="getLogin">绑定账号</van-tag>
               </div> 
             </div>
           </div> 
@@ -215,12 +215,15 @@ export default {
         },
         {
           name:'设置',
-          url:'',
+          url:'/setting',
           src:require('../assets/bookShelf/setting.png'),
           value:''
         },
       ]
     }
+  },
+  mounted(){
+    this.show=this.$store.state.show
   },
   methods:{
     //列表的数据加载
@@ -232,6 +235,7 @@ export default {
     //点击头像出现设置
     getSetting(){
       this.show=true;
+      this.$store.commit('saveShow',this.show)
     },
     //点击编辑书架气泡选择框
     onSelect(action) {
@@ -248,6 +252,9 @@ export default {
     //进入小说详情页面
     getNovelContent(index){
 
+    },
+    getLogin(){
+      this.$router.push('/login')
     }
   }
 };
@@ -365,6 +372,7 @@ export default {
   height:60%;
 }
 .contentTopLeft span{
+  margin-left:2px;
   color:#fa4f21;
 }
 .contentTopRight{

@@ -111,7 +111,7 @@
                                 </div>
                             </div>
                             <div class="commentBottom">
-                                <span>查看全部评论</span>
+                                <span @click="getCommentDetail">查看全部评论</span>
                             </div>
                             
                         </div>
@@ -164,6 +164,9 @@ export default {
         },
         dowmUp(){
             this.arrowFlag=!this.arrowFlag;
+        },
+        getCommentDetail(){
+            this.$router.push({name:'commentDetail',params:{title:this.title}})
         }
     }
 }
@@ -271,9 +274,9 @@ div /deep/ .van-button--normal{
     line-height:20px;
     position:relative;
 }
-.introductText{
+/* .introductText{
     
-}
+} */
 .tips{
     display: -webkit-box;
     word-break: break-all;

@@ -25,7 +25,7 @@ export default {
     }
   },
     mounted(){
-        console.log('aindex')
+        // console.log('aindex')
     },
     methods:{
 

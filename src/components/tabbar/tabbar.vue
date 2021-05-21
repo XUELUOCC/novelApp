@@ -47,7 +47,7 @@ export default {
         }
     },
     created(){ 
-        console.log(this.$route)
+        // console.log(this.$route)
         let path=this.$route.fullPath;
         let newData=this.tabbarList.filter((item,index)=>{
             if(item.url==path){
@@ -56,8 +56,9 @@ export default {
                 return false
             }
         })
+        //判断是否选中
         this.active=newData[0].index
-        console.log(newData)
+        // console.log(newData)
     },
     methods:{
         onChange(index){
