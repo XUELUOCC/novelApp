@@ -71,6 +71,12 @@ const routes = [,
       import(/* webpackChunkName: "commentDetail" */"../views/pages/commentDetail.vue")
   },
   {
+    path:"/bookContent",
+    name:"bookContent",
+    component:()=>
+      import(/* webpackChunkName: "bookContent" */"../components/bookContent.vue")
+  },
+  {
     path:"/setting",
     name:"setting",
     component:()=>

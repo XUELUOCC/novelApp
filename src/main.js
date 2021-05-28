@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+//引入jquery
+import jquery from 'jquery'
+
 //导入vant ui
 import Vant from 'vant';
 import 'vant/lib/index.css';
@@ -22,5 +25,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  jquery,
   render: (h) => h(App),
 }).$mount("#app");
