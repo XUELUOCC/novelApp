@@ -74,7 +74,13 @@ const routes = [,
     path:"/bookContent",
     name:"bookContent",
     component:()=>
-      import(/* webpackChunkName: "bookContent" */"../components/bookContent.vue")
+      import(/* webpackChunkName: "bookContent" */"../components/bookContent/bookContent.vue")
+  },
+  {
+    path:"/bookCatalogue",
+    name:"bookCatalogue",
+    component:()=>
+      import(/* webpackChunkName: "bookCatalogue" */"../components/bookContent/bookCatalogue.vue")
   },
   {
     path:"/setting",

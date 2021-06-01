@@ -1,5 +1,5 @@
 <template>
-  <div class="bookContent">
+  <div class="bookContent" ref="bookContent">
     <div id="magazine">
       <div v-for="(item, index) in allPages" :key="`test_${index}`">
           <div class="text">
@@ -15,7 +15,7 @@
     <!--设置内容-->
     <van-popup v-model="show" position="top" :overlay="false" :style="{ height: '8%' }" >
       <div class="settingTop">
-        <van-nav-bar title="" left-text="" left-arrow>
+        <van-nav-bar title="" left-text="" left-arrow @click-left="onClickLeft">
           <template #right>
             <div class="navBarRight">
               <van-tag size="medium" text-color="#fff" color="#161614">刷新</van-tag>
@@ -24,10 +24,15 @@
                 placement="bottom-end"
                 theme="dark"
                 trigger="click"
+                :offset="[20,10]"
                 :actions="actions"
               >
                 <template #reference>
-                  <img src="../assets/bookContent/detailMore.png" alt="">
+                  <div class="detailIcon">
+                    <!-- <img src="../../assets/bookContent/detailMore.png" alt=""> -->
+                    <van-icon name="weapp-nav" />
+                  </div>
+                  
                 </template>
               </van-popover>
             </div>
@@ -36,20 +41,52 @@
       </div>
     </van-popup>
     <van-popup v-model="show" position="bottom" :overlay="false" :style="{ height: '15%' }" >
-      <div>bbbbbb</div>
+      <div class="bottomContent">
+        <div class="bottomContentTop">
+          <div class="topLeft">上一章</div>
+          <div class="topCenter">|</div>
+          <div class="topRight">下一章</div>
+        </div>
+        <div class="bottomContainerBottom">
+          <div class="bottomContentBottom">
+            <div class="item" v-for="(item,index) in settingList" :key="index" @click="getSettingBar(item)">
+              <img :src="item.imgSrc" alt="">
+              <span>{{item.name}}</span>
+            </div>
+          </div>
+         
+        </div>
+      </div>
     </van-popup>
+
+    <!--点击设置出现的设置选项-->
+    <div class="getSetting" v-if="showSettingContent">
+      <div class="light">
+        <div class="lightLeft">
+          <img src="../../assets/bookContent/light.png" alt="">
+          <div class="lightSilder">
+            <van-slider v-model="value" :min="0" :max="100" active-color="#aaaaaa" />
+          </div>
+          <img src="../../assets/bookContent/lightFinished.png" alt="">
+        </div>
+        
+      </div>
+    </div>
+  
   </div>
 </template>
 <script>
-import turn from "../../public/lib/turn";
+import turn from "../../../public/lib/turn";
 
 export default {
-  name: "FenMian2",
+  name: "bookContent",
   data() {
     return {
-      value: "",
+      value:100,  //设置亮度范围
+      bookTitle:'',
       page: 1,
       show:false,
+      showSettingContent:false,
       showPopover: false,
       actions: [{ text: '书籍详情' }],
       allPages: [
@@ -77,16 +114,55 @@ export default {
           page: 6,
           name: "aa"
         }
+      ],
+      settingList:[
+        {
+          name:'目录',
+          imgSrc:require('../../assets/bookContent/catalogue.png')
+        },
+         {
+          name:'听书',
+          imgSrc:require('../../assets/bookContent/earphone.png')
+        },
+         {
+          name:'缓存',
+          imgSrc:require('../../assets/bookContent/cache.png')
+        },
+         {
+          name:'设置',
+          imgSrc:require('../../assets/bookContent/setting.png')
+        },
       ]
     };
   },
   mounted() {
+    //设置value的值，以便使用在style中
+    // this.$refs.bookContent.style.setProperty('opacity',this.value)
+
+    this.bookTitle=this.$route.params.bookName
     this.loadTurn()
   },
   methods: {
+    onClickLeft(){
+        console.log('返回')
+        this.$router.back(-1)
+    },
+     // 返回一个特定的 DOM 节点，作为挂载的父节点
+    getContainer() {
+      return document.querySelector('.getSetting');
+    },
     //设置是否显示设置内容
     showSetting(){
       this.show=!this.show
+      this.showSettingContent=false;
+    },
+    //去往四个书籍设置页面
+    getSettingBar(item){
+      if(item.name=="目录"){
+        this.$router.push({name:'bookCatalogue',params:{bookName:this.bookTitle}})
+      }else if(item.name=="设置"){
+        this.showSettingContent=!this.showSettingContent;
+      }
     },
     //设置turn.js，设置页面的翻页效果
     loadTurn(){
@@ -184,6 +260,17 @@ export default {
   width:100%;
   height:100%;
 }
+.detailIcon{
+  // width:15px;
+  height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.detailIcon img{
+  margin-left:5px;
+  height:40%;
+}
 .bookContent /deep/ .van-popup{
   background-color:#161614;
 }
@@ -202,7 +289,9 @@ export default {
   border-radius: 4px;
 }
 .navBarRight{
+  width:60px;
   height:80%;
+  padding:15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -213,8 +302,102 @@ export default {
   align-items: center;
   height:100%;
 }
-.navBarRight /deep/ .van-popover__wrapper img{
-  margin-left:5px;
-  height:40%;
+// .navBarRight /deep/ .van-popover__wrapper img{
+//   margin-left:5px;
+//   height:40%;
+// }
+
+/**设置bottom */
+.bottomContent{
+  width:100%;
+  height:100%;
+  margin:0 auto;
+}
+.bottomContentTop{
+  width:100%;
+  height:50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topLeft,.topRight{
+  width:45%;
+  height:100%;
+  color:#fff;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+.topCenter{
+  width:5%;
+  height:100%;
+  color:#fff;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+.bottomContainerBottom{
+  width:100%;
+  height:49%;
+  border-top:1px solid #fff;
+}
+.bottomContentBottom{
+  width:100%;
+  height:100%;
+  margin:0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.item{
+  width:25%;
+  height:80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.item img{
+  height:50%;
+}
+.item span{
+  color:#fff;
+}
+
+/**挂载显示的设置dom */
+.getSetting{
+  position:fixed;
+  bottom:15%;
+  z-index:2002;
+  width:100%;
+  height:150px;
+  border-bottom:1px solid #fff;
+  background-color:#161614;
+}
+.light{
+  width:90%;
+  height:20%;
+  margin:10px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lightLeft{
+  width:65%;
+  height:100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lightLeft img{
+  height:80%;
+}
+.lightLeft .lightSilder{
+  width:60%;
+}
+.lightSilder /deep/ .van-slider__button{
+  width:15px;
+  height:15px;
+  background-color:#fd436a;
 }
 </style>

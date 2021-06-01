@@ -43,7 +43,7 @@
                                         <van-button size="normal"  plain type="primary">加入书架</van-button>
                                     </div>
                                     <div class="detailBtnR">
-                                        <van-button size="normal"  type="primary">立即阅读</van-button>
+                                        <van-button @click="getBookContent" size="normal"  type="primary">立即阅读</van-button>
                                     </div>
                                     
                                 </div>
@@ -167,6 +167,9 @@ export default {
         },
         getCommentDetail(){
             this.$router.push({name:'commentDetail',params:{title:this.title}})
+        },
+        getBookContent(){
+            this.$router.push({name:'bookContent',params:{bookName:this.title}})
         }
     }
 }
