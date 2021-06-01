@@ -1,21 +1,43 @@
 <template>
-  <div class="body-content">
+  <div class="bookContent">
     <div id="magazine">
       <div v-for="(item, index) in allPages" :key="`test_${index}`">
-        <div :class="`text${item.page}`">
+          <div class="text">
             第{{index+1}}页
-          <!-- <footer
-            v-if="item.page - 1 !== 0 && item.page - 1 !== allPages.length - 1"
-            class="current-page"
-          >
-            <div v-if="(item.page - 1) % 2 == 0" class="even-numbers">
-              {{ item.page - 1 }}
-            </div>
-            <div v-else class="odd-number">{{ item.page - 1 }}</div>
-          </footer> -->
         </div>
       </div>
     </div>
+
+    <div class="left"></div>  <!--上一页-->
+    <div class="centerSetting" @click="showSetting"></div>  <!--显示设置-->
+    <div class="right"></div> <!--下一页-->
+
+    <!--设置内容-->
+    <van-popup v-model="show" position="top" :overlay="false" :style="{ height: '8%' }" >
+      <div class="settingTop">
+        <van-nav-bar title="" left-text="" left-arrow>
+          <template #right>
+            <div class="navBarRight">
+              <van-tag size="medium" text-color="#fff" color="#161614">刷新</van-tag>
+              <van-popover
+                v-model="showPopover"
+                placement="bottom-end"
+                theme="dark"
+                trigger="click"
+                :actions="actions"
+              >
+                <template #reference>
+                  <img src="../assets/bookContent/detailMore.png" alt="">
+                </template>
+              </van-popover>
+            </div>
+          </template>
+        </van-nav-bar>
+      </div>
+    </van-popup>
+    <van-popup v-model="show" position="bottom" :overlay="false" :style="{ height: '15%' }" >
+      <div>bbbbbb</div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -27,6 +49,9 @@ export default {
     return {
       value: "",
       page: 1,
+      show:false,
+      showPopover: false,
+      actions: [{ text: '书籍详情' }],
       allPages: [
         {
           page: 1,
@@ -56,166 +81,140 @@ export default {
     };
   },
   mounted() {
-    let self = this;
-    $("#magazine").turn("center");
-    $("#magazine").turn("page");
-    this.$nextTick(() => {
-      $("#magazine").turn({
-        display: "single",
-        elevation: 50,
-        duration: 100,
-        gradients: true,
-        autoCenter: true,
-        acceleration: true,
-        gradients: !$.isTouch,
-        page: self.page,
-        width: 375,
-        when: {
-          turned: function(e, page, pages) {
-            //当前页
-            console.log("Current view: ", $(this).turn("view"));
-            //总页数
-            console.log(
-              "#magazine has " + $("#magazine").turn("pages") + " pages"
-            );
-            // $("#magazine").turn("hasPage", 10);
-            // $("#magazine").turn("pages", 5);
-          }
-        }
-      });
-    });
+    this.loadTurn()
   },
-  methods: {},
+  methods: {
+    //设置是否显示设置内容
+    showSetting(){
+      this.show=!this.show
+    },
+    //设置turn.js，设置页面的翻页效果
+    loadTurn(){
+      let that=this;
+      $(function () {
+          $('#magazine').turn({ 
+            display: "single",
+            duration:800,
+            gradients: true, 
+            acceleration: true,
+            when: {
+                turned: function(e, page, pages) {
+                  console.log(page)
+                  console.log(pages)
+                  //当前页
+                  console.log("Current view: ", $(this).turn("view")[0]);
+                  //总页数
+                  console.log(
+                    "#magazine has " + $("#magazine").turn("pages") + " pages"
+                  );
+                }
+            }
+          });
+          //上一页
+          $('.left').bind("touchend",function(){
+            that.show=false;
+            var pageCount = $("#magazine").turn("pages");//总页数
+            let currentPage = $("#magazine").turn("page");//当前页
+            if (currentPage >= 2) {
+              $("#magazine").turn('page', currentPage - 1);
+            } else {
+              that.$toast('已经是第一页了')
+              return false
+            }
+          })
+          //下一页
+          $('.right').bind("touchend",function(){
+             that.show=false;
+            var pageCount = $("#magazine").turn("pages");//总页数
+            let currentPage = $("#magazine").turn("page");//当前页
+            if (currentPage < pageCount) {
+              $("#magazine").turn('page', currentPage + 1);
+            } 
+            if(currentPage == pageCount){
+                that.$toast('已经是最后一页了')
+                return false
+              }
+          })
+      });
+    },
+  },
   components: {}
 };
 </script>
 <style lang="scss" scoped>
-body {
-  background: #ccc;
+.bookContent{
+  width:100%;
+  height:100%;
 }
 #magazine {
-  width: 375px;
-  height: 600px;
-  .text1 {
-    // background: url("../assets/bookShelf/novelPage2.jpeg") no-repeat;
-    // background-size: 100% 100%;
-    background-color:antiquewhite;
-    width: 100%;
-    height: 100%;
-  }
-  .text2 {
-    // background: url("../assets/bookShelf/novelPage.jpg") no-repeat;
-    // background-size: 100% 100%;
-    background-color:antiquewhite;
-    width: 100%;
-    height: 100%;
-  }
-  .text3 {
-    // background: url("../assets/bookShelf/novelPage2.jpeg") no-repeat;
-    // background-size: 100% 100%;
-    background-color:antiquewhite;
-    width: 100%;
-    height: 100%;
-  }
-  .text4 {
-     background: url("../assets/bookShelf/novelPage.jpg") no-repeat;
-    background-size: 100% 100%;
-    width: 100%;
-    height: 100%;
-  }
-  .text5 {
-     background: url("../assets/bookShelf/novelPage2.jpeg") no-repeat;
-    background-size: 100% 100%;
-    width: 100%;
-    height: 100%;
-  }
-  .text6 {
-     background: url("../assets/bookShelf/novelPage.jpg") no-repeat;
-    background-size: 100% 100%;
-    width: 100%;
-    height: 100%;
-  }
-  .page-wrapper{
-    width:100%!important;
-    height:100%!important;
-    }
-  .current-page {
-    // position: absolute;
-    // bottom: 0;
-    // width: 100%;
-    // text-align: center;
-    // font-size: 14px;
-    // .even-numbers {
-    //   width: 30px;
-    //   height: 30px;
-    //   background: #ffcc66;
-    //   color: #fff;
-    //   right: 0;
-    //   position: absolute;
-    //   bottom: 0px;
-    //   line-height: 30px;
-    //   text-align: center;
-    // }
-    // .odd-number {
-    //   position: absolute;
-    //   bottom: 0px;
-    //   width: 30px;
-    //   height: 30px;
-    //   background: #cc00ff;
-    //   color: #fff;
-    //   line-height: 30px;
-    //   text-align: center;
-    // }
-  }
+  width:100%;
+  height:100%;
+}
+#magazine .page{
+    background-color:#e6e3dc;  //设置翻页和每一页的底色
+    // border:1px solid Red;
+}
+.left{
+  width:35%;
+  height:100%;
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:999;
+}
+.right{
+  width:35%;
+  height:100%;
+  position:absolute;
+  right:0;
+  top:0;
+  z-index:999;
+}
+.centerSetting{
+  width:30%;
+  height:100%;
+  position:absolute;
+  right:35%;
+  top:0;
+  z-index:999;
 }
 
-// #magazine .shadow,
-// #magazine.shadow {
-//   -webkit-box-shadow: 0 4px 10px #666;
-//   -moz-box-shadow: 0 4px 10px #666;
-//   -ms-box-shadow: 0 4px 10px #666;
-//   -o-box-shadow: 0 4px 10px #666;
-//   box-shadow: 0 4px 10px #666;
-// }
-
-#magazine .turn-page {
-//   background-color: #fff;
-//   background-size: 100% 100%;
+/**设置 */
+.settingTop{
+  width:100%;
+  height:100%;
 }
-// .bookmark {
-//   margin-left: 633px;
-//   font-size: 20px;
-//   writing-mode: tb-rl;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   text-align: center;
-//   padding-top: 47px;
-//   .item:nth-child(2n) {
-//     background: #ccc;
-//     width: 45px;
-//     height: 150px;
-//   }
-//   .item {
-//     width: 45px;
-//     height: 160px;
-//     background: red;
-//   }
-//   .item:nth-child(1) {
-//     z-index: 4;
-//     text-shadow: 6px 6px 6px #999;
-//   }
-//   .item:nth-child(2) {
-//     z-index: 3;
-//     text-shadow: 6px 6px 6px #333;
-//   }
-//   .item:nth-child(3) {
-//     z-index: 2;
-//     text-shadow: 6px 6px 6px #333;
-//   }
-//   .item:nth-child(4) {
-//     z-index: 1;
-//     text-shadow: 6px 6px 6px #333;
-//   }
-// }
+.bookContent /deep/ .van-popup{
+  background-color:#161614;
+}
+.settingTop /deep/ .van-nav-bar{
+  background-color:#161614;
+  height:100%;
+}
+.settingTop /deep/ .van-nav-bar .van-icon{
+  color:#fff;
+}
+.settingTop /deep/ .van-nav-bar__content{
+  height:100%;
+}
+.navBarRight /deep/ .van-tag{
+  border:1px solid #fff;
+  border-radius: 4px;
+}
+.navBarRight{
+  height:80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navBarRight /deep/ .van-popover__wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:100%;
+}
+.navBarRight /deep/ .van-popover__wrapper img{
+  margin-left:5px;
+  height:40%;
+}
 </style>
